@@ -1,0 +1,43 @@
+import java.util.*;
+import java.math.BigInteger;
+import java.io.*;
+/**
+ *
+ * @author billy
+ */
+public class FibonacciSequence {
+   
+    public static void main(String[] args) throws IOException {
+        
+        Scanner input = new Scanner (System.in);
+        String N = "00" + (input.nextBigInteger()).toString(2);
+
+        BigInteger f0 = new BigInteger("1");
+        BigInteger f1 = new BigInteger("0");
+        BigInteger temp = new BigInteger("0"); 
+        for (int i =0; i<N.length();i++){//second from the left binary digit
+            
+            //set as if index is 0, then adjust for 1
+            //f0 = f2k-1 future
+            //f1 = f2k+1 future
+            //f0 = fk-1. f1 = fk
+            temp = f0;
+            f0 = (f0.multiply(f0).add(f1.multiply(f1)));
+            f1 = f1.multiply(temp.add(temp).add(f1));
+            
+             if (N.charAt(i) == '1'){
+                //f0 = f2k
+                //f1 = f2k+1
+                temp = f0;
+                f0=f1;
+                f1 = f1.add(temp);
+            }
+            f0 = f0.mod(BigInteger.valueOf(1000000007));
+            f1 = f1.mod(BigInteger.valueOf(1000000007));
+            
+        }
+        
+        System.out.println(f1);
+    }
+
+}
