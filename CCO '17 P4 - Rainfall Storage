@@ -1,9 +1,6 @@
 import java.util.*;
 import java.io.*;
-/**
- *
- * @author billy
- */
+
 public class CCO_RainfallStorage {
 
             static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -13,7 +10,8 @@ public class CCO_RainfallStorage {
    
 
     public static void main(String[] args) throws IOException {
-        
+                   // ©Maillew 2020 :)))
+
         int n = readInt();
         int[] a = new int[n];
         
