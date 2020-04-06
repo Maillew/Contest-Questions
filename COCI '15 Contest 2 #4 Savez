@@ -2,10 +2,7 @@
 import java.util.*;
 import java.io.*;
 
-/**
- *
- * @author billy
- */
+
 public class Savez {
      static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
@@ -15,25 +12,8 @@ public class Savez {
         
         
 	public static void main(String[] args) throws IOException {
-            //compare if suffix is equal to prefix and then if it is equal to another string
-            //HASHING BABBYYYYYYYYYYY
-            //change a string to a unique value
-            
-            //to handle overflow, we can mod by a large prime
-            //or we let it overflow
-            
-            //to get a substring, we get hash of R, subtract hash of (L-1) * base ^ L -1
-            
-            
-            //how do we handle hashing collision? 
-            /*
-            1. change the parameters such as the base and the mod
-            2. double hash
-            if we have string abcdefghijklmno
-            we can hash abcdefgh with base 131
-            and then hash ijklmno with a differemt base and sum it
-            */
-            
+                       // ©Maillew 2020 :)))
+
             int n = readInt();
             int base = 131;
             Map<Long, Integer> map = new HashMap(); // Integer and Long are a class, not a primitive type
