@@ -1,10 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-/**
- *
- * @author billy
- */
+
 
 class Pair { 
     int x; 
@@ -46,7 +43,8 @@ public class HungaryGames {
      * @param args the command line arguments
      */
        	public static void main(String[] args) throws IOException {
-		
+		           // ©Maillew 2020 :)))
+
             int n = readInt();
             int m = readInt();
             
