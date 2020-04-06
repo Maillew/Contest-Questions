@@ -1,0 +1,85 @@
+import java.util.*;
+import java.io.*;
+/**
+ *
+ * @author billy
+ */
+public class CCO_RainfallStorage {
+
+            static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+   static PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+   static StringTokenizer st;
+
+   
+
+    public static void main(String[] args) throws IOException {
+        
+        int n = readInt();
+        int[] a = new int[n];
+        
+        for (int i =0; i<n; i++){
+            a[i] = -1*readInt();
+        }
+        Arrays.sort(a);
+        
+        for (int i =0; i<n; i++){
+            a[i] = -1*a[i];
+        }
+
+        
+        boolean[] dp = new boolean[n*50+1];
+        boolean[] heights = new boolean[51];
+        heights[a[1]] = true;
+        dp[0] = true;
+        
+        for (int i =1; i<n; i++){
+            for (int j = 50*n; j>=0; j--){
+                if (dp[j]) {
+                    continue;
+                }
+                for (int k =0; k<=50; k++){
+                    
+                if (j-(k-a[i]) >=0 && j-(k-a[i]) <=n*50 && heights[k]){
+                  if (dp[j-(k-a[i])]){
+                      dp[j] = true;
+                  }
+                }  
+                    
+                }
+            }
+            heights[a[i]] = true;
+        }
+        
+        for (int i =0; i<=n*50; i++){
+            if (dp[i]){
+                System.out.print(i + " ");
+            }
+        }
+    }
+
+
+
+
+
+
+   static String read () throws IOException {
+       while (st == null || !st.hasMoreTokens())
+           st = new StringTokenizer(br.readLine().trim());
+       return st.nextToken();
+   }
+   static long readLong () throws IOException {
+       return Long.parseLong(read());
+   }
+   static int readInt () throws IOException {
+       return Integer.parseInt(read());
+   }
+   static double readDouble () throws IOException {
+       return Double.parseDouble(read());
+   }
+   static char readChar () throws IOException {
+       return read().charAt(0);
+   }
+   static String readLine () throws IOException {
+       return br.readLine().trim();
+   }
+}
