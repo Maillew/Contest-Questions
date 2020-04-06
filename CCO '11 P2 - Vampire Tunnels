@@ -1,9 +1,6 @@
 import java.util.*;
 import java.io.*;
-/**
- *
- * @author billy
- */
+
 class Triple { 
     int index; 
     int dis;
@@ -46,7 +43,9 @@ public class Main {
      * @param args the command line arguments
      */
    	public static void main(String[] args) throws IOException {
-            int k = readInt();//seconds
+                       // ©Maillew 2020 :)))
+
+	    int k = readInt();//seconds
             int n = readInt();//nodes
             int m = readInt();//conenctions
 
