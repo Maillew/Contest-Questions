@@ -1,14 +1,12 @@
 import java.util.*;
 import java.math.BigInteger;
 import java.io.*;
-/**
- *
- * @author billy
- */
+
 public class FibonacciSequence {
    
     public static void main(String[] args) throws IOException {
-        
+                   // ©Maillew 2020 :)))
+
         Scanner input = new Scanner (System.in);
         String N = "00" + (input.nextBigInteger()).toString(2);
 
