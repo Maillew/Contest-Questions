@@ -1,0 +1,87 @@
+
+import java.util.*;
+import java.io.*;
+
+/**
+ *
+ * @author billy
+ */
+public class Savez {
+     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+	static StringTokenizer st;
+        
+        
+        
+        
+	public static void main(String[] args) throws IOException {
+            //compare if suffix is equal to prefix and then if it is equal to another string
+            //HASHING BABBYYYYYYYYYYY
+            //change a string to a unique value
+            
+            //to handle overflow, we can mod by a large prime
+            //or we let it overflow
+            
+            //to get a substring, we get hash of R, subtract hash of (L-1) * base ^ L -1
+            
+            
+            //how do we handle hashing collision? 
+            /*
+            1. change the parameters such as the base and the mod
+            2. double hash
+            if we have string abcdefghijklmno
+            we can hash abcdefgh with base 131
+            and then hash ijklmno with a differemt base and sum it
+            */
+            
+            int n = readInt();
+            int base = 131;
+            Map<Long, Integer> map = new HashMap(); // Integer and Long are a class, not a primitive type
+            long ans = 0;
+            
+            for (int t =1; t<=n; t++){
+                String s = readLine(); int best = 0;
+                long pre = 0, suf = 0, pw = 1;
+                for (int i =0; i<s.length();i++){
+                    pre = pre*base + s.charAt(i);
+                    suf = s.charAt(s.length()-i-1)*pw + suf;
+                    pw*= base;
+                    if (pre == suf) best = Math.max(best, map.getOrDefault(pre,0));//checks if you have the value in the map, and if not, uses default valueas the value
+                    
+                
+                }
+                ans = Math.max(ans, best + 1);
+                map.put(pre, best + 1);
+              
+            }
+            System.out.println(ans);
+
+        }
+        
+        
+        
+        
+	static String next () throws IOException {
+		while (st == null || !st.hasMoreTokens())
+			st = new StringTokenizer(br.readLine().trim());
+		return st.nextToken();
+	}
+	static long readLong () throws IOException {
+		return Long.parseLong(next());
+	}
+	static int readInt () throws IOException {
+		return Integer.parseInt(next());
+	}
+	static double readDouble () throws IOException {
+		return Double.parseDouble(next());
+	}
+	static char readCharacter () throws IOException {
+		return next().charAt(0);
+	}
+	static String readLine () throws IOException {
+		return br.readLine().trim();
+	}
+   
+    
+    
+}
