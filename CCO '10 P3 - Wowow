@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp> 
+#include <ext/pb_ds/tree_policy.hpp> 
+#pragma GCC optimize "Ofast"
+#pragma GCC optimize "Ofast"
+#pragma GCC optimize "unroll-loops"
+#pragma GCC optimize "omit-frame-pointer"
+#pragma GCC optimize "prefetch-loop-arrays"
+#pragma GCC target "sse,sse2,sse3,sse4,abm,avx,aes,sse4a,sse4.1,sse4.2,mmx,popcnt,tune=native"
+using namespace __gnu_pbds;
+using namespace std;
+#define os tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> 
+int N,X,R,K, id[(int) 1e6+5];;
+char Q;
+
+unordered_map <int,int> id2;
+os s;
+
+int main(){
+        ios_base::sync_with_stdio(false); 
+    cin.tie(NULL); 
+  cin>> N;
+  for (int i =0; i<N;i++){
+      cin>>Q;
+      if (Q == 'N'){
+          cin>>X;
+          cin>>R;
+          id[X] = R;
+          id2[R] = X;
+          s.insert(R);
+      }
+      else if (Q == 'M'){
+        cin>>X;
+        cin>>R;
+        id2[id[X]] = 0;
+        s.erase(id[X]);//person with old R rating
+        s.insert(R);
+        id[X]= R;//x person with new R rating
+        id2[R] = X;
+      }
+      else if (Q == 'Q'){
+        cin>>K;
+        cout<<id2[*s.find_by_order(s.size()-K)]<<"\n";      
+      }
+  }
+  return 0;
+}
