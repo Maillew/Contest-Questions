@@ -1,0 +1,115 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+         
+ static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+	static StringTokenizer st;
+        
+        
+        
+        
+	public static void main(String[] args) throws IOException {
+
+            List<Integer> adj[] = new ArrayList[27];
+            for (int i =0; i<27; i++){
+                adj[i] = new ArrayList();
+            }
+
+            for (int i =0; i<10000000; i++){
+                String city = readLine();
+                if (city.equals("**"))break;
+                else {
+                    char one = city.charAt(0);
+                    char two = city.charAt(1);
+                    
+                    adj[((int)one)-64].add(((int)two) -64);
+                    adj[((int) two) - 64].add(((int) one) - 64);
+                }
+                
+            }
+            int count = 0;
+        HashMap<String, Integer> map = new HashMap<>();   
+            
+        for (int t =26; t>=1; t--){    
+            for (int i =adj[t].size()-1; i>=0;i--){
+                int temp = adj[t].get(i);//i is index, not value
+                int one = adj[t].get(i);
+                int two = adj[temp].get(adj[temp].indexOf(t));
+                adj[t].remove(i);
+                adj[temp].remove(adj[temp].indexOf(t));
+               
+                Queue<Integer> q = new LinkedList();
+                int dis[] = new int[27];
+                boolean vis[] = new boolean[27];
+                q.add(1);
+                vis[1] = true;
+                dis[1] = 1;
+
+                while (!q.isEmpty()) {
+                    int cur = q.poll();
+                    for (int nxt : adj[cur]) {
+                        if (!vis[nxt]) {
+                            q.add(nxt);
+                            vis[nxt] = true;
+                            dis[nxt] = dis[cur] + 1;
+                        }
+                    }
+                }
+                
+                if (!vis[2] && !map.containsKey((char)(one+64) + "" + (char)(two+64))) {
+                    System.out.println((char)(one+64) + "" + (char)(two+64));
+                    count++;
+                    map.put((char) (two + 64) + "" + (char) (one + 64), 0);
+                }
+                adj[t].add(temp);
+                adj[temp].add(t);
+                
+            }
+        }
+            System.out.println("There are " + count + " disconnecting roads.");
+
+            
+}
+        
+        
+        
+        
+        
+	static String next () throws IOException {
+		while (st == null || !st.hasMoreTokens())
+			st = new StringTokenizer(br.readLine().trim());
+		return st.nextToken();
+	}
+	static long readLong () throws IOException {
+		return Long.parseLong(next());
+	}
+	static int readInt () throws IOException {
+		return Integer.parseInt(next());
+	}
+	static double readDouble () throws IOException {
+		return Double.parseDouble(next());
+	}
+	static char readCharacter () throws IOException {
+		return next().charAt(0);
+	}
+	static String readLine () throws IOException {
+		return br.readLine().trim();
+	}
+   /*
+AC
+AD
+AE
+CE
+CF
+ED
+GF
+BG
+HB
+GH
+**
+        */
+    
+   
+}
