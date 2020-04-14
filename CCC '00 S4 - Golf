@@ -1,0 +1,81 @@
+import java.util.*;
+import java.io.*;
+/**
+ *
+ * @author billy
+ */
+
+
+/* Name of the class has to be "Main" only if the class is public. */
+public class Golf {
+
+        static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        static PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+        static StringTokenizer st;
+
+        public static void main(String[] args) throws IOException {
+
+            int dis = readInt();
+            int n = readInt();
+
+            int[] array = new int[n + 1];
+
+            for (int i = 1; i <= n; i++) {
+                array[i] = readInt();
+            }
+
+            int[] dp = new int[dis+1];// 0, 1 - distance
+            Arrays.fill(dp, Integer.MAX_VALUE);
+            dp[0] = 0;
+            
+            for (int i = 0; i <= dis; i++) {//distance
+                for (int j = 1; j <= n; j++) {//clubs
+                    if (dp[i] < Integer.MAX_VALUE) {//checks if we can go to the location we are at right now
+                        if (i + array[j] <= dis) {
+                            dp[i + array[j]] = Math.min(dp[i]+1, dp[i+array[j]]);
+                        }
+                    }
+                }
+            }
+            /*for (int i =0; i<=dis; i++){
+                if (dp[i]< Integer.MAX_VALUE){
+                    System.out.println (i + " " + dp[i]);
+                }
+            }
+            */
+            if (dp[dis] == Integer.MAX_VALUE) {
+                System.out.println("Roberta acknowledges defeat.");
+
+            } else {
+                System.out.println("Roberta wins in " + dp[dis] + " strokes.");
+
+            }
+        }
+
+        static String next() throws IOException {
+            while (st == null || !st.hasMoreTokens()) {
+                st = new StringTokenizer(br.readLine().trim());
+            }
+            return st.nextToken();
+        }
+
+        static long readLong() throws IOException {
+            return Long.parseLong(next());
+        }
+
+        static int readInt() throws IOException {
+            return Integer.parseInt(next());
+        }
+
+        static double readDouble() throws IOException {
+            return Double.parseDouble(next());
+        }
+
+        static char readCharacter() throws IOException {
+            return next().charAt(0);
+        }
+
+        static String readLine() throws IOException {
+            return br.readLine().trim();
+        }
+    }
