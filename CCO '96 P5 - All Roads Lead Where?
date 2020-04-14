@@ -1,0 +1,111 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+           static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+	static StringTokenizer st;
+        
+        
+        
+        
+	public static void main(String[] args) throws IOException {
+
+        int m = readInt();
+        int n = readInt();List<Integer> adj[] = new ArrayList[(int)10e4+1];
+        for (int i =0; i<adj.length;i++){
+            adj[i] = new ArrayList<>();
+        }
+        
+       HashMap<String, Integer> map = new HashMap<>();
+       HashMap<Integer,String> map2 = new HashMap<>();
+       int count = 1;
+       for (int i =0; i<m;i ++){
+           String city = readLine();
+           String city1 = city.substring(0,1);
+           String city2 = city.substring(city.indexOf(" ")+1, city.indexOf(" ")+2);
+           if(!map.containsKey(city1)){
+               map.put(city1,count);
+               map2.put(count, city1);
+               count++;
+           }
+           
+           if(!map.containsKey(city2)){
+            map.put(city2,count);
+            map2.put(count, city2);
+               count++;
+           }
+           adj[map.get(city1)].add(map.get(city2));
+           adj[map.get(city2)].add(map.get(city1));
+
+       } 
+         
+      
+           
+       for (int t =1; t<=n; t++){
+           String city = readLine();
+           int src = map.get(city.substring(0,1));
+           int  dest = map.get(city.substring(city.indexOf(" ")+1, city.indexOf(" ")+2));
+           String ans = "";
+           
+            
+           
+           Queue<Integer> q = new LinkedList();
+            int dis[] = new int[map.size()+1]; boolean vis[]= new boolean[map.size()+1];
+            int[] pred = new int[map.size()+1];
+            
+            q.add(src); vis[src] = true; dis[src]=0; pred[src]=-1;
+            while(!q.isEmpty()){
+                int cur = q.poll(); 
+                for (int nxt: adj[cur]){
+                    if(!vis[nxt]){
+                        q.add(nxt); vis[nxt] = true; dis[nxt] = dis[cur]+1;pred[nxt] = cur;
+                    }
+                }
+        }
+
+            ArrayList<Integer> path = new ArrayList<>();
+            path.add(dest);
+            int index = 0;
+            while(path.get(index)!=-1){
+                path.add(pred[dest]);
+                dest = pred[dest];
+                index++;
+            }
+            for (int i =path.size()-2; i>=0;i--){
+                ans+=map2.get(path.get(i));//change to key a
+                
+                
+            }
+            System.out.println(ans);
+        }  
+        
+        
+        }
+        
+        
+        
+        
+        
+        
+	static String next () throws IOException {
+		while (st == null || !st.hasMoreTokens())
+			st = new StringTokenizer(br.readLine().trim());
+		return st.nextToken();
+	}
+	static long readLong () throws IOException {
+		return Long.parseLong(next());
+	}
+	static int readInt () throws IOException {
+		return Integer.parseInt(next());
+	}
+	static double readDouble () throws IOException {
+		return Double.parseDouble(next());
+	}
+	static char readCharacter () throws IOException {
+		return next().charAt(0);
+	}
+	static String readLine () throws IOException {
+		return br.readLine().trim();
+	}
+}
