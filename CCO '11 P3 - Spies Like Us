@@ -1,0 +1,76 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+          static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+	static StringTokenizer st;
+        
+
+        public static void main (String[] args) throws IOException{
+        
+                
+            
+            //how to check if there are more than one shared contact
+            // -> have an adjacency list for both sides and who they are connected
+            // with
+            //mark the adjacencyies in a 2d arr
+            // when connecting a to b, check b' adjacency lists
+            // if b is shared with c, check a c on 2d array
+            //if its already marked, they already share a person
+            //else mark it
+            
+            //bruce way
+            
+            
+           int n = readInt();
+           int m = readInt();
+           int k = readInt();
+           List<Integer> adj[] = new ArrayList[m+1];
+            for (int i =1; i<=m; i++){
+             adj[i] = new ArrayList();
+            }
+            
+            boolean vis[][] = new boolean[n+1][n+1];
+            
+            for (int i =0; i<k; i++){
+                int a = readInt();
+                int b = readInt();
+                for (int c: adj[b]){
+                    if (vis[a][c]){
+                        System.out.println("NO"); return;
+                    }
+                    vis[a][c] = vis[c][a] = true;
+                }
+            adj[b].add(a);
+            }
+            System.out.println("YES");
+
+        }
+        
+        
+        
+	static String next () throws IOException {
+		while (st == null || !st.hasMoreTokens())
+			st = new StringTokenizer(br.readLine().trim());
+		return st.nextToken();
+	}
+	static long readLong () throws IOException {
+		return Long.parseLong(next());
+	}
+	static int readInt () throws IOException {
+		return Integer.parseInt(next());
+	}
+	static double readDouble () throws IOException {
+		return Double.parseDouble(next());
+	}
+	static char readCharacter () throws IOException {
+		return next().charAt(0);
+	}
+	static String readLine () throws IOException {
+		return br.readLine().trim();
+	}
+   
+    
+   
+}
