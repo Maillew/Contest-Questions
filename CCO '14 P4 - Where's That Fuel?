@@ -1,0 +1,117 @@
+import java.util.*;
+import java.io.*;
+
+/**
+ *
+ * @author billy
+ */
+
+class Pair { 
+    int x; 
+    int y; 
+  
+    // Constructor 
+public Pair(int x, int y) 
+    { 
+        this.x = x; 
+        this.y = y; 
+    } 
+} 
+  
+// class to define user defined conparator 
+class Compare { 
+  
+    static void compare(Pair array[]) 
+    { 
+        // sorts pair based on first element
+        Arrays.sort(array, new Comparator<Pair>() { 
+            @Override public int compare(Pair p1, Pair p2){ 
+                return p1.y - p2.y; 
+            } 
+        }
+        ); 
+        
+        
+    } 
+} 
+
+public class WheresThatFuel {
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+   static PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+   static StringTokenizer st;
+
+   
+
+    public static void main(String[] args) throws IOException {
+        
+        int n = readInt();
+        int p = readInt();
+        
+        Pair [] pp = new Pair [n];//planets
+        
+        for (int i =0; i<n; i++){
+            int a = readInt();
+            int b = readInt();
+            Pair og = new Pair (a,b);
+            pp[i] = og;
+        }
+        
+        long fuel = 0;
+        boolean vis[] = new boolean[n];
+        int[] gains = new int[n];
+        boolean[] check = new boolean [n];
+                
+        fuel = pp[p-1].x;
+        pp[p-1].x = 0;
+        
+        Compare.compare(pp);//sort by b value
+        
+        for (int i =0; i<n; i++){
+            if (pp[i].x-pp[i].y>=0){
+                check[i] = true;//sees if its worth to go
+                gains[i] = pp[i].x - pp[i].y;//gains if u go
+            }
+        }
+        
+        int count = 0;
+        
+        for (int i = 0; i<n; i++){
+            if (fuel>=pp[i].y && check[i] && !vis[i]){
+                fuel += gains[i];
+                vis[i] = true;
+                count++;
+            }
+        }
+        
+        System.out.println(fuel);
+        System.out.println(count+1);
+    }
+    
+
+
+
+
+
+
+   static String read () throws IOException {
+       while (st == null || !st.hasMoreTokens())
+           st = new StringTokenizer(br.readLine().trim());
+       return st.nextToken();
+   }
+   static long readLong () throws IOException {
+       return Long.parseLong(read());
+   }
+   static int readInt () throws IOException {
+       return Integer.parseInt(read());
+   }
+   static double readDouble () throws IOException {
+       return Double.parseDouble(read());
+   }
+   static char readChar () throws IOException {
+       return read().charAt(0);
+   }
+   static String readLine () throws IOException {
+       return br.readLine().trim();
+   }
+    
+}
