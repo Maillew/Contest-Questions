@@ -1,0 +1,117 @@
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
+import java.util.*;
+
+/**
+ *
+ * @author billy
+ */
+class Pair {
+
+    int x;
+    int y;
+
+    // Constructor 
+    public Pair(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+// class to define user defined conparator 
+class Compare {
+
+    static void compare(Pair array[]) {
+        // sorts pair based on first element
+        Arrays.sort(array, new Comparator<Pair>() {
+            @Override
+            public int compare(Pair p1, Pair p2) {
+                return p1.x - p2.x;
+            }
+        }
+        );
+
+    }
+}
+public class MouseJourney {
+
+    /**
+     * @param args the command line arguments
+     */
+
+ static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+	static StringTokenizer st;
+        
+        
+        
+        
+	public static void main(String[] args) throws IOException {
+
+            int r = readInt();
+            int c = readInt();
+            int k = readInt();
+            long mod = 100000007;
+            
+            long[][] dp = new long[r + 1][c + 1];
+            for (int i =0; i<k; i++){
+                int x = readInt();
+                int y = readInt();
+                dp[x][y] = -1;
+                
+            }            
+            
+            dp[1][1] = 1;
+            
+            for (int i =1; i<=r; i++){
+                for (int j = 1; j<=c; j++){
+                    if (dp[i][j] == -1) continue;
+                    
+                    if (dp[i-1][j]>0) dp[i][j] +=dp[i-1][j];
+                    if (dp[i][j-1]>0) dp[i][j] += dp[i][j-1];
+                }
+            }
+            
+            System.out.println(dp[r][c]);
+            
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+	static String next () throws IOException {
+		while (st == null || !st.hasMoreTokens())
+			st = new StringTokenizer(br.readLine().trim());
+		return st.nextToken();
+	}
+	static long readLong () throws IOException {
+		return Long.parseLong(next());
+	}
+	static int readInt () throws IOException {
+		return Integer.parseInt(next());
+	}
+	static double readDouble () throws IOException {
+		return Double.parseDouble(next());
+	}
+	static char readCharacter () throws IOException {
+		return next().charAt(0);
+	}
+	static String readLine () throws IOException {
+		return br.readLine().trim();
+	}
+   
+    
+    
+
+
+    }
