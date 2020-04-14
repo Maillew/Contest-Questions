@@ -1,0 +1,227 @@
+import java.util.*;
+import java.io.*;
+/**
+ *
+ * @author billy
+ */
+
+class Pair { 
+    int x; 
+    int y; 
+  
+    // Constructor 
+public Pair(int x, int y) 
+    { 
+        this.x = x; 
+        this.y = y; 
+    } 
+} 
+  
+// class to define user defined conparator 
+class Compare { 
+  
+    static void compare(Pair array[]) 
+    { 
+        // sorts pair based on first element
+        Arrays.sort(array, new Comparator<Pair>() { 
+            @Override public int compare(Pair p1, Pair p2){ 
+                return p1.x - p2.x; 
+            } 
+        }
+        ); 
+        
+        
+    } 
+} 
+
+
+public class KnightlyPursuit {
+   
+    /**
+     * @param args the command line arguments
+     */
+  static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+	static StringTokenizer st;
+        
+        
+        
+        
+	public static void main(String[] args) throws IOException {
+
+        int t = readInt();
+        
+        for (int k =0; k<t; k++){
+            
+            int rows = readInt();
+            int col = readInt();
+            
+            int pR = readInt();
+            int pC = readInt();
+            
+            int kR = readInt();
+            int kC = readInt();
+            
+            int[][] count = new int[rows+1][col+1];
+            Queue<Pair> q = new LinkedList();
+            boolean[][] vis = new boolean[rows+1][col+1];
+            Pair first = new Pair(kR,kC);
+            q.add(first);
+            
+            for (int i =1; i<=rows; i++){
+                for (int j =1; j<=col; j++){
+                    count[i][j] = -1;
+                }
+            }
+            
+            count[kR][kC] = 0;
+            vis[kR][kC] = true;
+               
+            while (!q.isEmpty()){
+                Pair og = q.poll();
+                for (int i =1; i<=8; i++){
+                    if (i==1 && og.x+2<=rows && og.y+1 <=col && !vis[og.x+2][og.y+1]){
+                        
+                        Pair xy = new Pair (og.x+2, og.y+1);
+                        q.add(xy);
+                        vis[og.x+2][og.y+1] = true;
+                        count[og.x+2][og.y+1] = count[og.x][og.y]+1;
+                    }
+                    else if (i==2 && og.x+1<=rows && og.y+2 <=col && !vis[og.x + 1][og.y + 2]){
+                        
+                        Pair xy = new Pair(og.x + 1, og.y + 2);
+                        q.add(xy);
+                        vis[og.x+1][og.y+2] = true;
+                        count[og.x + 1][og.y + 2] = count[og.x][og.y]+1;
+                    }
+                    else if (i == 3 && og.x - 1 >0 && og.y + 2 <= col && !vis[og.x - 1][og.y + 2]) {
+                        Pair xy = new Pair(og.x - 1, og.y + 2);
+                        q.add(xy);
+                        vis[og.x - 1][og.y + 2] = true;
+                        count[og.x - 1][og.y + 2] = count[og.x][og.y]+1;
+                    }
+                    else if (i == 4 && og.x - 2 > 0 && og.y + 1 <= col && !vis[og.x - 2][og.y + 1]) {
+                        Pair xy = new Pair(og.x - 2, og.y + 1);
+                        q.add(xy);
+                        vis[og.x - 2][og.y + 1] = true;
+                        count[og.x - 2][og.y + 1] = count[og.x][og.y]+1;
+                    }
+                    else if (i == 5 && og.x - 2 > 0 && og.y - 1 > 0 && !vis[og.x - 2][og.y - 1]) {
+                        Pair xy = new Pair(og.x - 2, og.y - 1);
+                        q.add(xy);
+                        vis[og.x - 2][og.y - 1] = true;
+                        count[og.x - 2][og.y - 1] = count[og.x][og.y]+1;
+                    }
+                    else if (i == 6 && og.x - 1 > 0 && og.y - 2 > 0 && !vis[og.x - 1][og.y - 2]) {
+                        Pair xy = new Pair(og.x - 1, og.y - 2);
+                        q.add(xy);
+                        vis[og.x-1][og.y-2] = true;
+                        count[og.x - 1][og.y - 2]= count[og.x][og.y]+1;
+                    }
+                    else if (i == 7 && og.x + 1 <=rows && og.y - 2 > 0 && !vis[og.x + 1][og.y - 2])  {
+                        Pair xy = new Pair(og.x + 1, og.y - 2);
+                        q.add(xy);
+                        vis[og.x + 1][og.y - 2] = true;
+                        count[og.x + 1][og.y - 2] = count[og.x][og.y]+1;
+                    }
+                    else if (i == 8 && og.x + 2 <= rows && og.y - 1 > 0 && !vis[og.x + 2][og.y - 1]) {
+                        Pair xy = new Pair(og.x + 2, og.y - 1);
+                        q.add(xy);
+                        vis[og.x + 2][og.y - 1] = true;
+                        count[og.x + 2][og.y - 1] = count[og.x][og.y]+1;
+                    }
+                }
+            }
+                
+            
+            
+            //check all the squares the knight can access in the column
+            //count[i][pC];
+            
+            //wins
+            
+            
+            int[] pawn = new int[rows+1];
+            pawn[pR+1] = 1;
+            int win = 1;
+            int moves = Integer.MAX_VALUE;
+            
+            
+            for (int i =pR+2; i<=rows; i++){
+                pawn[i] = pawn[i-1]+1;
+                
+            }
+            
+            
+            for (int i = pR; i< rows; i++){
+                if (count[i][pC] !=-1 && count[i][pC]<=pawn[i] && (pawn[i]-count[i][pC]) % 2 ==0){
+                    win = 3;
+                    moves = Math.min (moves,pawn[i]);
+                    break;
+                }
+            }
+            
+            if (win!=3){
+            	
+                for (int i = pR; i < rows; i++) {
+                    if (count[i+1][pC] !=-1 && count[i+1][pC] <= pawn[i] && (pawn[i] - count[i+1][pC]) % 2 == 0) {
+                        win = 2;
+                        moves = Math.min (moves,pawn[i]);
+                        break;
+                    }
+                }
+            }
+            
+            if (win<2){
+                moves = pawn[rows]-1;
+            }
+            //what if pawn moves one square up, and it is immediately a stalemate?
+           
+            if (win ==3){
+                System.out.println("Win in " + moves + " knight move(s).");
+            }
+            else if (win ==2){
+                System.out.println("Stalemate in " + moves + " knight move(s).");
+            }
+            else System.out.println("Loss in " + moves + " knight move(s).");
+            //bfs the pawn
+            //check if the values are the same for the win, keep track of moves
+            
+            //then loop through tie, check if the knight above it is the same or not
+            
+            //if nothing happens, print out loss
+            
+            //instead of going up, ur going down
+            
+          
+          
+        }
+       //last 3 test cases
+       //4th test case
+        
+        }
+        
+	static String next () throws IOException {
+		while (st == null || !st.hasMoreTokens())
+			st = new StringTokenizer(br.readLine().trim());
+		return st.nextToken();
+	}
+	static long readLong () throws IOException {
+		return Long.parseLong(next());
+	}
+	static int readInt () throws IOException {
+		return Integer.parseInt(next());
+	}
+	static double readDouble () throws IOException {
+		return Double.parseDouble(next());
+	}
+	static char readCharacter () throws IOException {
+		return next().charAt(0);
+	}
+	static String readLine () throws IOException {
+		return br.readLine().trim();
+	}
+   
+    
+    
+}
