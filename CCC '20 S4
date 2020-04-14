@@ -1,0 +1,88 @@
+import java.util.*;
+import java.io.*;
+
+/**
+ *
+ * @author billy
+ */
+public class SwappingSeats {
+   static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+   static PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+   static StringTokenizer st;
+
+   static int ans = Integer.MAX_VALUE;
+
+    public static void main(String[] args) throws IOException {
+        
+        String s = readLine();
+        int n = s.length();
+        int []pa = new int[n+1];
+        int[] pb = new int[n+1];
+        int[] pc = new int[n+1];
+        
+        for (int i =1; i<=n; i++){
+            char c = s.charAt(i-1);
+            if (c=='A') pa[i] = 1;
+            if (c=='B') pb[i] = 1;
+            if (c == 'C') pc[i] = 1;
+            
+            pa[i]+=pa[i-1];
+            pb[i] += pb[i-1];
+            pc[i] += pc[i-1];
+            
+        }
+        
+        int na = pa[n];
+        int nb = pb[n];
+        int nc = pc[n];
+        
+        
+        for (int i =1; i<=n; i++){
+            if (i>=na+nb) {
+                check (pa,pb,i);
+                check (pb,pa,i);
+            }
+            if (i>=na+nc){
+                check(pa,pc, i);
+                check (pc,pa,i);
+            }
+            if (i>=nb+nc){
+                check (pb,pc,i);
+                check (pc,pb,i);
+            }
+            
+        }
+        System.out.println(ans);
+    }
+
+    static void check (int x[], int y[], int i){
+        int nx = x[x.length-1], ny = y[y.length-1];
+        int swap = ny - (y[i]-y[i-ny]) + nx - (x[i-ny] -x[i-ny-nx]);
+        swap -= Math.min(x[i] - x[i-ny], y[i-ny] - y[i-ny-nx]);
+        ans = Math.min(ans,swap);
+    }
+
+
+
+
+   static String read () throws IOException {
+       while (st == null || !st.hasMoreTokens())
+           st = new StringTokenizer(br.readLine().trim());
+       return st.nextToken();
+   }
+   static long readLong () throws IOException {
+       return Long.parseLong(read());
+   }
+   static int readInt () throws IOException {
+       return Integer.parseInt(read());
+   }
+   static double readDouble () throws IOException {
+       return Double.parseDouble(read());
+   }
+   static char readChar () throws IOException {
+       return read().charAt(0);
+   }
+   static String readLine () throws IOException {
+       return br.readLine().trim();
+   } 
+}
