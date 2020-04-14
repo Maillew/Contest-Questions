@@ -1,0 +1,90 @@
+ */
+import java.util.*;
+import java.io.*;
+/**
+ *
+ * @author billy
+ */
+public class LongestIncreasingSubsequence2 {
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+   static PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+   static StringTokenizer st;
+
+   
+
+    public static void main(String[] args) throws IOException {
+        
+        
+        //LIS usually takes O(n^2), but we can optimize it so that its O(nlogn)
+        //usually in LIS, we check all the values, but to optimize, we can use a dynamic
+        //array to store our values
+        //if a new number is greater than the greatest number in our list, we add it 
+        //if it is less, we binary search for the number thats one larger than the new number
+        //e.g. new number is 2, and our array has 7,10,23, we replace 7 with 2
+        
+        //this will give us the correct length, but the lists contents wont actually contain the values of the LIS
+        
+        //to get the actual final values, we can store the values in another dp array
+        
+        //we can fill the dp array, based on the position of the number in the lsit
+        
+        //eg, if we have 96 24  61 77
+        //our list will have 96; the index is 1, so dp[96] = 1;
+        //we add 24, it replaces 96, so dp[24] = 1;
+        //we add 61,  its greater than 24, so we add it; its index is 2, so dp[61] = 2
+        // we addd 77, its greater than 61, so we add it; its index is 3, so dp[77] = 3
+        
+        //to recover the values, we find the largest value, then loop backwards from there. we look for 
+        //a value where its value is less than the original, and the index is one less than the original
+        //77 = 3; we loop backwards. 61<77 and its index is 2, so then our LIS has a 77 and 61
+        //we loop back from there, we see 24. 24<66 and its index is 1, so our lis has a 77 and 61 and 24
+        
+        int n = readInt();
+        ArrayList<Integer> list = new ArrayList();
+
+        for (int i =0; i<n; i++){
+            int x = readInt();
+            if (list.isEmpty() || x>list.get(list.size()-1)){
+                list.add(x);
+            }
+            else{
+                int p = Collections.binarySearch(list, x);
+                //if x doesnt exist, p = -insertion point - 1
+                if (p<0){
+                    p = -p-1;
+                    list.set(p,x);
+                }
+            }
+        }
+        System.out.println(list.size());
+        
+        
+        
+    }
+
+
+
+
+
+
+   static String read () throws IOException {
+       while (st == null || !st.hasMoreTokens())
+           st = new StringTokenizer(br.readLine().trim());
+       return st.nextToken();
+   }
+   static long readLong () throws IOException {
+       return Long.parseLong(read());
+   }
+   static int readInt () throws IOException {
+       return Integer.parseInt(read());
+   }
+   static double readDouble () throws IOException {
+       return Double.parseDouble(read());
+   }
+   static char readChar () throws IOException {
+       return read().charAt(0);
+   }
+   static String readLine () throws IOException {
+       return br.readLine().trim();
+   }
+}
